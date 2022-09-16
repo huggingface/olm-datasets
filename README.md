@@ -2,7 +2,7 @@
 
 ## Setup
 1. Get a machine with lots of CPUs and memory. We use an n1-standard-96 Ubuntu 20.04 LTS machine on GCP. Add enough disk space too; at least 1TB if you want to pull a reasonable about of data.
-2. Install cargo (rust package manager) with `curl https://sh.rustup.rs -sSf | sh`. Then install Ungoliant with `cargo install ungoliant`. You may need to install gcc and cmake first.
+2. Install cargo (rust package manager) with `curl https://sh.rustup.rs -sSf | sh`. Then install Ungoliant with `cargo install ungoliant@1.2.3`. You may need to install gcc and cmake first.
 3. Set up a Python 3.8 environment, and run `pip install -r requirements.txt`
 4. Run `bash setup_ungoliant_bigscience_pipeline.sh`. This will set up the BigScience filtering code which deduplicates the corpus and filters documents if they have too much pornographic content. It will also download NLP models which are used by both Ungoliant and BigScience to do things such as filter the corpus for English-only pages.
 5. Run `huggingface-cli login` (should have been installed in the requirements.txt) and then paste a token from your account at [https://huggingface.co](https://huggingface.co). This is necessary because the pipeline will push the finalized datasets to your account.

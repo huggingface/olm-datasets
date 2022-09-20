@@ -19,7 +19,7 @@ d = Dataset.from_parquet(path_or_paths=["ungoliant_pipeline_results_en_parquet/"
 # Filter the dataset to remove wikipedia urls (we assume that the final dataset will also have a full dump of wikipedia, and we want to deduplicate it).
 d = d.filter(lambda example: not example["warc_headers"]["warc-target-uri"].startswith("https://en.wikipedia.org/wiki/"), num_proc=num_proc)
 
-# Reformat the dataset to work with the bigscience filtering and deduplication scripts.
-d = d.map(lambda example, idx: {"id": idx, "text": example["content"], "meta": dict(**example["metadata"], **{"headers": example["warc_headers"]})}, num_proc=num_proc, with_indices=True, remove_columns=["content", "warc_headers", "metadata"])
+# Reformat the dataset to work with the bigscience filtering and deduplication scripts. Note that we replace newlines with spaces.
+d = d.map(lambda example, idx: {"id": idx, "text": example["content"].replace("\n", " "), "meta": dict(**example["metadata"], **{"headers": example["warc_headers"]})}, num_proc=num_proc, with_indices=True, remove_columns=["content", "warc_headers", "metadata"])
 
 d.push_to_hub("Tristan/ungoliant-for-olm-raw-" + sys.argv[1])

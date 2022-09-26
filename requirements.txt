@@ -11,3 +11,4 @@ apache_beam==2.41.0
 mwparserfromhell==0.6.4
 text-dedup==0.1.0
 argparse==1.4.0
+dateparser==1.1.1

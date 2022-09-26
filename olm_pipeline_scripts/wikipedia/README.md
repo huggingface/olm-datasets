@@ -3,5 +3,5 @@ Follow these steps to download, clean, and push your very own Wikipedia pretrain
 
 You can get the names for the latest wikipedia snapshots here: [https://dumps.wikimedia.org/enwiki/](https://dumps.wikimedia.org/enwiki/).
 
-Unlike the Common Crawl code, this Wikipedia code is unfortunately not written for multiple CPUs. It will likely a bit over 30 hours :(. Also you need to make sure you have enough RAM. We needed 100's G's of RAM.
+Unlike the Common Crawl code, this Wikipedia code is unfortunately not written for multiple CPUs. It will likely take a bit over 30 hours :(. Also you need to make sure you have enough RAM. We needed 100's of G's of RAM.
 

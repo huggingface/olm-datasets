@@ -1,0 +1,6 @@
+[submodule "data-preparation"]
+	path = olm_pipeline_scripts/common_crawl/data-preparation
+	url = https://github.com/bigscience-workshop/data-preparation.git
+[submodule "deduplicate-text-datasets"]
+	path = olm_pipeline_scripts/common_crawl/deduplicate-text-datasets
+	url = https://github.com/google-research/deduplicate-text-datasets.git

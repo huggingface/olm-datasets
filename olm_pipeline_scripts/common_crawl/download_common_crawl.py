@@ -26,6 +26,8 @@ for index in range(len(args.common_crawl_snapshots)):
     run(f"cd {download_dir_name} && for f in * ; do mv \"$f\" {'0'*index}\"$f\" ; done", shell=True)
 
     # Now we can move the downloaded files into the main download dir which has the downloads from the rest of this for loop.
-    run("mv {download_dir_name}/* {args.download_dir}/", shell=True)
-    run("rm -r {download_dir_name}", shell=True)
+    run(f"mv {download_dir_name}/* {args.download_dir}/", shell=True)
+    run(f"rm -r {download_dir_name}", shell=True)
+
+run("rm -r errors.txt", shell=True)
 

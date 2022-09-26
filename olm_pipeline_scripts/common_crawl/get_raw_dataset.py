@@ -71,5 +71,4 @@ for p in processes:
 ds = Dataset.from_parquet([path.join(ungoliant_pipeline_output_dir, "en_parquet", "*.parquet") for ungoliant_pipeline_output_dir in ungoliant_pipeline_output_dirs])
 ds = ds.map(lambda example, index: {"id": index, "text": example["content"], "url": example["warc_headers"]["warc-target-uri"], "timestamp": dateutil.parser.parse(example["warc_headers"]["warc-date"]).timestamp()}, num_proc=args.num_proc, with_indices=True, remove_columns=["content", "warc_headers", "metadata"])
 ds.push_to_hub(args.output_dataset_name)
-shutil.rmtree("ungoliant_pipeline_results")
-shutil.rmtree("errors.txt")
+rmtree("ungoliant_pipeline_results")

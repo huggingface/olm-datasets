@@ -12,38 +12,44 @@ parser.add_argument("--samples", type=int)
 args = parser.parse_args()
 
 today = datetime.datetime.today()
+one_week_ago = (today-datetime.timedelta(weeks=1)).timestamp()
+one_month_ago = (today-datetime.timedelta(weeks=4)).timestamp()
+two_months_ago = (today-datetime.timedelta(weeks=8)).timestamp()
+three_months_ago = (today-datetime.timedelta(weeks=12)).timestamp()
+times_to_compare = {"one_month_ago": one_month_ago, "two_months_ago": two_months_ago, "three_months_ago": three_months_ago}
 
-if today.month == 1:
-    one_month_ago = today.replace(year=today.year - 1, month=12)
-else:
-    extra_days = 0
-    while True:
-        try:
-            one_month_ago = today.replace(month=today.month - 1, day=today.day - extra_days)
-            break
-        except ValueError:
-            extra_days += 1
-
-one_month_ago = one_month_ago.timestamp()
-
+# TODO (Tristan): make the split configurable
 ds = load_dataset(args.input_dataset_name, split="train")
 ds = ds.shuffle(seed=42).select(range(args.samples))
 
 def timestamp_stats(text):
-    dates = search_dates(text)
+    try:
+        dates = search_dates(text, languages=["en"])
+    except Exception:
+        return None
     if dates is None or len(dates) == 0:
         return None
     timestamps = [date_tuple[1].timestamp() for date_tuple in dates]
-    avg = sum(timestamps)/len(timestamps)
-    fraction_in_past_month = len([timestamp for timestamp in timestamps if timestamp > one_month_ago])/len(timestamps)
-    return {"avg": avg, "fraction_in_past_month": fraction_in_past_month}
+    stats = {"timestamps": timestamps}
+    for name, reference_timestamp in times_to_compare.items():
+        # Assume that there was a parsing error if the timestamp is more recent than a week ago.
+        is_time_after = 1 if len([timestamp for timestamp in timestamps if timestamp > reference_timestamp and timestamp < one_week_ago]) > 0 else 0
+        stats["is_time_after_" + name] = is_time_after
+    return stats
 
 ds = ds.map(lambda example: {"timestamp_stats": timestamp_stats(example[args.text_column])}, num_proc=args.num_proc)
 ds = ds.filter(lambda example: example["timestamp_stats"] is not None, num_proc=args.num_proc)
-ds = ds.map(lambda example: {"avg_timestamp": example["timestamp_stats"]["avg"], "timestamp_fraction_in_past_month": example["timestamp_stats"]["fraction_in_past_month"]}, num_proc=args.num_proc)
-med = median(ds["avg_timestamp"])
-avg = sum(ds["avg_timestamp"])/len(ds["avg_timestamp"])
-avg_fraction_in_past_month = sum(ds["timestamp_fraction_in_past_month"])/len(ds["timestamp_fraction_in_past_month"])
-print("avg timestamp: ", avg)
-print("median timestamp: ", med)
-print("avg timestamp fraction in past month: ", avg_fraction_in_past_month)
+ds = ds.map(lambda example: example["timestamp_stats"], num_proc=args.num_proc, remove_columns=[name for name in ds.column_names if name not in ds[0]["timestamp_stats"].keys()])
+
+for column in ds.column_names:
+    if column != "timestamps":
+        med = median(ds[column])
+        avg = sum(ds[column])/len(ds[column])
+        print(column + " avg: ", avg)
+
+all_timestamps = []
+for timestamps in ds["timestamps"]:
+    all_timestamps += timestamps
+
+print("avg timestamp: ", sum(all_timestamps)/len(all_timestamps))
+print("median timestamp: ", median(all_timestamps))

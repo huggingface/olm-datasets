@@ -12,6 +12,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--common_crawl_download_dir")
 parser.add_argument("--output_dataset_name")
+parser.add_argument("--lang_id")
 parser.add_argument("--num_proc", type=int)
 args = parser.parse_args()
 
@@ -55,9 +56,9 @@ for ungoliant_pipeline_output_dir in ungoliant_pipeline_output_dirs:
     def convert_to_parquet(ungoliant_pipeline_output_dir):
         i = 0
         print("Chunking the ungoliant json into several parquet files before loading into huggingface dataset.")
-        parquet_file_dir = path.join(ungoliant_pipeline_output_dir, "en_parquet")
+        parquet_file_dir = path.join(ungoliant_pipeline_output_dir, args.lang_id + "_parquet")
         mkdir(parquet_file_dir)
-        for chunk in tqdm(pd.read_json(path.join(ungoliant_pipeline_output_dir, "en_meta.jsonl"), lines=True, chunksize=10000)):
+        for chunk in tqdm(pd.read_json(path.join(ungoliant_pipeline_output_dir, args.lang_id + "_meta.jsonl"), lines=True, chunksize=10000)):
             parquet_file_path = path.join(parquet_file_dir, str(i) + ".parquet")
             chunk.to_parquet(parquet_file_path)
             i += 1
@@ -68,7 +69,9 @@ for ungoliant_pipeline_output_dir in ungoliant_pipeline_output_dirs:
 for p in processes:
     p.join()
 
-ds = Dataset.from_parquet([path.join(ungoliant_pipeline_output_dir, "en_parquet", "*.parquet") for ungoliant_pipeline_output_dir in ungoliant_pipeline_output_dirs])
+ds = Dataset.from_parquet([path.join(ungoliant_pipeline_output_dir, args.lang_id + "_parquet", "*.parquet") for ungoliant_pipeline_output_dir in ungoliant_pipeline_output_dirs])
 ds = ds.map(lambda example, index: {"id": index, "text": example["content"], "url": example["warc_headers"]["warc-target-uri"], "timestamp": dateutil.parser.parse(example["warc_headers"]["warc-date"]).timestamp()}, num_proc=args.num_proc, with_indices=True, remove_columns=["content", "warc_headers", "metadata"])
+ds.save_to_disk("tmp_huggingface_dataset")
 ds.push_to_hub(args.output_dataset_name)
 rmtree("ungoliant_pipeline_results")
+rmtree("tmp_huggingface_dataset")

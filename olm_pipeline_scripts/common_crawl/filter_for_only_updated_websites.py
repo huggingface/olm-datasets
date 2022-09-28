@@ -6,12 +6,12 @@ parser.add_argument("--input_dataset_name")
 parser.add_argument("--output_dataset_name")
 parser.add_argument("--text_column")
 parser.add_argument("--timestamp_column")
+parser.add_argument("--split")
 parser.add_argument("--url_column")
 parser.add_argument("--num_proc", type=int)
 args = parser.parse_args()
 
-# TODO (Tristan): make it work without specifying the split.
-ds = load_dataset(args.input_dataset_name, split="train")
+ds = load_dataset(args.input_dataset_name, split=args.split)
 
 # Group so examples with the same URL are next to each other in the dataset.
 ds = ds.sort(args.url_column)

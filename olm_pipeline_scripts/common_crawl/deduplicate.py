@@ -1,5 +1,4 @@
 from datasets import load_dataset
-#from text_dedup.embedders.suffix import SuffixArrayEmbedder
 from text_dedup.exact_dedup import GoogleSuffixArrayDeduplicator
 from shutil import rmtree
 import argparse
@@ -15,10 +14,8 @@ args = parser.parse_args()
 ds = load_dataset(args.input_dataset_name, split=args.split)
 
 # If an example in our courpus has a byte string of 100 or longer which is duplicated elsewhere in the corpus, remove the example.
-#embedder = SuffixArrayEmbedder(k=100)
-deduplicator = GoogleSuffixArrayDeduplicator(k=100, merge_strategy='overlapping')
-deduplicator.fit_predict(ds[args.text_column])
-#slices = embedder.embed_bash(ds[args.text_column])
+deduplicator = GoogleSuffixArrayDeduplicator(k=100)
+slices = deduplicator.fit_predict(ds[args.text_column])
 ds = ds.filter(lambda example, index: slices[index] == [], num_proc=args.num_proc, with_indices=True)
 
 ds.push_to_hub(args.output_dataset_name)

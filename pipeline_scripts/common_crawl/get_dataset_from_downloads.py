@@ -9,7 +9,7 @@ import dateutil
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--common_crawl_download_dir")
+parser.add_argument("--download_dir")
 parser.add_argument("--output_dataset_name")
 parser.add_argument("--lang_id")
 parser.add_argument("--num_proc", type=int)

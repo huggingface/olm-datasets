@@ -13,6 +13,7 @@ parser.add_argument("--output_dataset_name")
 parser.add_argument("--lang_id")
 parser.add_argument("--text_column_name")
 parser.add_argument("--num_proc", type=int)
+parser.add_argument("--push_to_hub", action="store_true")
 args = parser.parse_args()
 
 ds = load_dataset(args.input_dataset_name)
@@ -49,5 +50,8 @@ if args.text_column != "text":
     if temp_column_name is not None:
         ds = ds.rename_column(temp_column_name, "text")
 
-ds.push_to_hub(args.output_dataset_name)
+ds.save_to_disk(args.output_dataset_name)
 rmtree("tmp_dataset")
+
+if args.push_to_hub:
+    ds.push_to_hub(args.output_dataset_name)

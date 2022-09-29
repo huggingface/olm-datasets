@@ -9,6 +9,7 @@ parser.add_argument("--timestamp_column")
 parser.add_argument("--split")
 parser.add_argument("--url_column")
 parser.add_argument("--num_proc", type=int)
+parser.add_argument("--push_to_hub", action="store_true")
 args = parser.parse_args()
 
 ds = load_dataset(args.input_dataset_name, split=args.split)
@@ -53,4 +54,7 @@ def check_for_updated_example_in_url_pair(example, index):
 
 ds = ds.filter(lambda example, index: check_for_updated_example_in_url_pair(example, index), num_proc=args.num_proc, with_indices=True)
 
-ds.push_to_hub(args.output_dataset_name)
+ds.save_to_disk(args.output_dataset_name)
+
+if args.push_to_hub:
+    ds.push_to_hub(args.output_dataset_name)

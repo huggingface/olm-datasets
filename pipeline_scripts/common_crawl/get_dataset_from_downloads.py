@@ -8,12 +8,12 @@ from shutil import move, rmtree
 import dateutil
 import argparse
 
-# TODO (Tristan): Make this not change the formatting of the download dir.
 parser = argparse.ArgumentParser()
 parser.add_argument("--common_crawl_download_dir")
 parser.add_argument("--output_dataset_name")
 parser.add_argument("--lang_id")
 parser.add_argument("--num_proc", type=int)
+parser.add_argument("--push_to_hub", action="store_true")
 args = parser.parse_args()
 
 filenames = next(walk(args.common_crawl_download_dir), (None, None, []))[2]
@@ -48,7 +48,13 @@ for i in range(len(filename_per_directory)):
         do_parallel_pipeline_processing(dirs_awaiting_processing)
         num_files_awaiting_processing = 0
         dirs_awaiting_processing = []
+
 do_parallel_pipeline_processing(dirs_awaiting_processing)
+
+for i in range(len(filename_per_directory)):
+    download_chunk_dir = args.common_crawl_download_dir + "/chunk_" + str(i)
+    for filename in filename_per_directory[i]:
+        move(path.join(download_chunk_dir, filename), path.join(args.common_crawl_download_dir, filename))
 
 # For some reason, datasets errors out if we try to load directly from the jsonl, so we need to do this first
 processes = []
@@ -71,7 +77,8 @@ for p in processes:
 
 ds = Dataset.from_parquet([path.join(ungoliant_pipeline_output_dir, args.lang_id + "_parquet", "*.parquet") for ungoliant_pipeline_output_dir in ungoliant_pipeline_output_dirs])
 ds = ds.map(lambda example, index: {"id": index, "text": example["content"], "url": example["warc_headers"]["warc-target-uri"], "timestamp": dateutil.parser.parse(example["warc_headers"]["warc-date"]).timestamp()}, num_proc=args.num_proc, with_indices=True, remove_columns=["content", "warc_headers", "metadata"])
-ds.save_to_disk("tmp_huggingface_dataset")
-ds.push_to_hub(args.output_dataset_name)
+ds.save_to_disk(args.output_dataset_name)
 rmtree("ungoliant_pipeline_results")
-rmtree("tmp_huggingface_dataset")
+
+if args.push_to_hub:
+    ds.push_to_hub(args.output_dataset_name)

@@ -3,7 +3,7 @@
 This repo is a work in progress. Soon it will enable you to pull a large and up-to-date text corpus from the web. It uses state-of-the-art processing methods to produce a clean text dataset that you can immediately use to pretrain a large language model, like BERT, GPT, or BLOOM.
 
 Specifically, this repo has modular Python commands that enable you to:
-* Specify whole Common Crawl web snapshots, or just Wikipedia snapshots. Then pull the data.
+* Specify Common Crawl web snapshots, or just Wikipedia snapshots. Then pull the data.
 * Filter the data for a particular language, like English or French.
 * Run the OSCAR filters used by BigScience for the BLOOM language model. These filters ensure some level of text quality and reduce pornographic content.
 * Deduplicate the data.

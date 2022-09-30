@@ -20,8 +20,8 @@ This code is also highly parallelized. You can get a clean pretraining dataset a
 
 ## Getting a clean and up-to-date Common Crawl corpus
 
-Follow the instructions at [olm_pipeline_scripts/common_crawl](olm_pipeline_scripts/common_crawl).
+Follow the instructions at [pipeline_scripts/common_crawl](pipeline_scripts/common_crawl).
 
 ## Getting a clean and up-to-date Wikipedia corpus
 
-Follow the instructions at [olm_pipeline_scripts/wikipedia](olm_pipeline_scripts/wikipedia).
+Follow the instructions at [pipeline_scripts/wikipedia](pipeline_scripts/wikipedia).

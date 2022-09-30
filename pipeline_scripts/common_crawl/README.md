@@ -31,4 +31,5 @@ Some notes:
 
 * To get more data, you can increase `segment_sampling_ratios` all the way up to `1`.
 * Each of the python commands (besides `download_common_crawl.py`) saves a Hugging Face dataset that the next python command consumes. You can push these intermediate datasets to the Hugging Face Hub too, and load them to take a look.
+* To get a dataset for a language besides English, just replace "en" with another supported language code in the commands above.
 

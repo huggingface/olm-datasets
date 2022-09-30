@@ -11,12 +11,23 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--input_dataset_name")
 parser.add_argument("--output_dataset_name")
 parser.add_argument("--lang_id")
-parser.add_argument("--text_column_name")
+parser.add_argument("--split", default=None)
+parser.add_argument("--text_column")
 parser.add_argument("--num_proc", type=int)
 parser.add_argument("--push_to_hub", action="store_true")
+parser.add_argument("--load_from_hub_instead_of_disk", action="store_true")
 args = parser.parse_args()
 
-ds = load_dataset(args.input_dataset_name)
+if args.load_from_hub_instead_of_disk:
+    if args.split is None:
+        ds = load_dataset(args.input_dataset_name)
+    else:
+        ds = load_dataset(args.input_dataset_name, split=args.split)
+else:
+    if args.split is None:
+        ds = load_from_disk(args.input_dataset_name)
+    else:
+        ds = load_from_disk(args.input_dataset_name)[args.split]
 
 # We have to do this if the text column is not named "text" in the dataset,
 # because DatasetFiltering assumes that the name is "text".

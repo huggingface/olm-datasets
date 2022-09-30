@@ -1,4 +1,4 @@
-from datasets import load_dataset
+from datasets import load_dataset, load_from_disk
 from dateparser.search import search_dates
 import datetime
 from statistics import median
@@ -7,9 +7,22 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--input_dataset_name")
 parser.add_argument("--text_column")
+parser.add_argument("--split", default=None)
 parser.add_argument("--num_proc", type=int)
 parser.add_argument("--samples", type=int)
+parser.add_argument("--load_from_hub_instead_of_disk", action="store_true")
 args = parser.parse_args()
+
+if args.load_from_hub_instead_of_disk:
+    if args.split is None:
+        ds = load_dataset(args.input_dataset_name)
+    else:
+        ds = load_dataset(args.input_dataset_name, split=args.split)
+else:
+    if args.split is None:
+        ds = load_from_disk(args.input_dataset_name)
+    else:
+        ds = load_from_disk(args.input_dataset_name)[args.split]
 
 today = datetime.datetime.today()
 one_week_ago = (today-datetime.timedelta(weeks=1)).timestamp()
@@ -18,8 +31,6 @@ two_months_ago = (today-datetime.timedelta(weeks=8)).timestamp()
 three_months_ago = (today-datetime.timedelta(weeks=12)).timestamp()
 times_to_compare = {"one_month_ago": one_month_ago, "two_months_ago": two_months_ago, "three_months_ago": three_months_ago}
 
-# TODO (Tristan): make the split configurable
-ds = load_dataset(args.input_dataset_name, split="train")
 ds = ds.shuffle(seed=42).select(range(args.samples))
 
 def timestamp_stats(text):

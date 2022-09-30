@@ -15,7 +15,7 @@ python apply_bigscience_filters.py --input_dataset_name=cc_no_wikipedia --output
 ulimit -Sn 1000000 && python deduplicate.py --input_dataset_name=cc_filtered --output_dataset_name=cc_olm --text_column=text --url_column=url --timestamp_column=timestamp --num_proc=96
 ```
 
-You can then upload the final dataset to the huggingface hub from a Python terminal like this:
+You can then upload the final dataset to the Hugging Face Hub from a Python terminal like this:
 
 ```
 from datasets import load_from_disk

@@ -5,7 +5,7 @@
 
 ## Every time
 
-This gives you a small sample of the final processed dataset. To get more data, increase `segment_sampling_ratios` all the way up to `1`:
+Use the following commands to get a small sample of the final processed dataset. They should take only a few min on an `n1-standard-96`.
 
 ```
 python download_common_crawl.py --snapshots CC-MAIN-2022-33 --segment_sampling_ratios 0.0001 --download_dir=common_crawl_wet_downloads --num_proc=96

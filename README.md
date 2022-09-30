@@ -1,4 +1,4 @@
-# Online Language Modelling Dataset Pipeline
+# Online Language Modelling Dataset Pipeline (🚧 Work in Progress, may not work for you at the moment 🚧)
 
 This repo is a work in progress. Soon it will enable you to pull a large and up-to-date text corpus from the web. It uses state-of-the-art processing methods to produce a clean text dataset that you can immediately use to pretrain a large language model, like BERT, GPT, or BLOOM.
 

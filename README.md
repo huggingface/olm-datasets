@@ -8,7 +8,7 @@ Specifically, this repo has modular Python commands that enable you to:
 * Run the OSCAR filters used by BigScience for the BLOOM language model. These filters ensure some level of text quality and reduce pornographic content.
 * Deduplicate the data.
 
-This code is also highly parallelized. You can get a clean pretraining dataset at the scale of 10's of gigabytes in a few hours if you have:
+This code is also highly parallelized. It can process 100's of gigabytes from Common Crawl in a few hours if you have:
 * A machine with a lot of CPUs (on the order of 100), like n1-standard-96 on GCP.
 * fast internet connection.
 

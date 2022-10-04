@@ -8,8 +8,8 @@ Specifically, this repo has modular Python commands that enable you to:
 * Run the OSCAR filters used by BigScience for the BLOOM language model. These filters ensure some level of text quality and reduce pornographic content.
 * Deduplicate the data.
 
-This code is also highly parallelized. It can process 100's of gigabytes from Common Crawl in a few hours if you have:
-* A machine with a lot of CPUs (on the order of 100), like n1-standard-96 on GCP.
+This code is also highly parallelized. It can process 100's of gigabytes from Common Crawl in a few hours, and all of English Wikipedia in under an hour if you have:
+* A machine with a lot of CPUs (on the order of 100) and a lot of memory (on the order of 300 GB), like n1-standard-96 on GCP.
 * fast internet connection.
 
 ## Setup
@@ -25,3 +25,7 @@ Follow the instructions at [pipeline_scripts/common_crawl](pipeline_scripts/comm
 ## Getting a clean and up-to-date Wikipedia corpus
 
 Follow the instructions at [pipeline_scripts/wikipedia](pipeline_scripts/wikipedia).
+
+## Analyzing the corpora
+
+Follow the instructions at [analysis_scripts](analysis_scripts).

@@ -4,13 +4,13 @@ import datetime
 from statistics import median
 import argparse
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--input_dataset_name")
-parser.add_argument("--text_column")
-parser.add_argument("--split", default=None)
-parser.add_argument("--num_proc", type=int)
-parser.add_argument("--samples", type=int)
-parser.add_argument("--load_from_hub_instead_of_disk", action="store_true")
+parser = argparse.ArgumentParser(description="This script analyzes a sample of a dataset for which dates are mentioned in the text.")
+parser.add_argument("--input_dataset_name", required=True)
+parser.add_argument("--text_column", required=True)
+parser.add_argument("--split", default=None, help="The dataset split to use. Some datasets don't have splits so this argument is optional.")
+parser.add_argument("--num_proc", type=int, required=True)
+parser.add_argument("--samples", type=int, default=1000)
+parser.add_argument("--load_from_hub_instead_of_disk", action="store_true", help="Whether to load the input dataset from the Hugging Face hub instead of the disk (default is the disk).")
 args = parser.parse_args()
 
 if args.load_from_hub_instead_of_disk:
@@ -43,7 +43,7 @@ def timestamp_stats(text):
     timestamps = [date_tuple[1].timestamp() for date_tuple in dates]
     stats = {"timestamps": timestamps}
     for name, reference_timestamp in times_to_compare.items():
-        # Assume that there was a parsing error if the timestamp is more recent than a week ago.
+        # Don't include dates from more recent than a week ago, because the parser parses terms like "Today" in the text as the current date.
         is_time_after = 1 if len([timestamp for timestamp in timestamps if timestamp > reference_timestamp and timestamp < one_week_ago]) > 0 else 0
         stats["is_time_after_" + name] = is_time_after
     return stats

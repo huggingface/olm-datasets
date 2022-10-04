@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(description="Turns downloads from download_comm
 parser.add_argument("--download_dir", help="The directory of the downloaded WET files.", required=True)
 parser.add_argument("--output_dataset_name", help="The name of the Hugging Face dataset which will be saved upon completion of this program.", required=True)
 parser.add_argument("--num_proc", type=int, help="The number of processes to use, at a minimum.", required=True)
-parser.add_argument("--tmp_dir", default=".tmp_get_dataset_from_downloads", help="The directory to store temporary files. They will be deleted upon completion of this script. Defaults to .tmp_get_datasets_from_downloads.")
+parser.add_argument("--tmp_dir", default=".tmp_get_dataset_from_downloads", help="The directory to store temporary files. The directory will be deleted upon completion of this script. Defaults to .tmp_get_datasets_from_downloads.")
 parser.add_argument("--push_to_hub", action="store_true", help="Whether to push the Hugging Face dataset to the Hugging Face Hub after saving a copy to the disk.")
 args = parser.parse_args()
 
@@ -43,6 +43,10 @@ def do_parallel_pipeline_processing(dirs_awaiting_processing):
     for p in processes:
         p.wait()
 
+# This loop runs the ungoliant pipeline num_proc number of times to generate num_proc number of output files.
+# the ungoliant pipeline is already parallelized, so we don't do this so that the ungoliant pipeline will run faster.
+# Instead, we do this so that we will have num_proc number of output files so we can load them in parallel into a 
+# pandas dataframes, which will eventually be turned into Hugging Face dataset.
 ungoliant_pipeline_results = path.join(tmp_download_dir, "ungoliant_pipeline_results")
 mkdir(ungoliant_pipeline_results)
 for i in range(len(filename_per_directory)):
@@ -62,7 +66,7 @@ for i in range(len(filename_per_directory)):
 
 do_parallel_pipeline_processing(dirs_awaiting_processing)
 
-# For some reason, datasets errors out if we try to load directly from the jsonl, so we need to do this first
+# For some reason, datasets errors out if we try to load directly from the jsonl, so we need to do this first.
 processes = []
 for ungoliant_pipeline_output_dir in ungoliant_pipeline_output_dirs:
     language_filenames = [name for name in next(walk(ungoliant_pipeline_output_dir), (None, None, []))[2] if name.endswith("_meta.jsonl")]
@@ -71,7 +75,7 @@ for ungoliant_pipeline_output_dir in ungoliant_pipeline_output_dirs:
         for language_filename in language_filenames:
             language_id = language_filename.split("_")[0]
             i = 0
-            print("Chunking the ungoliant json into several parquet files before loading into huggingface dataset.")
+            print("Chunking the ungoliant json into several parquet files and reformatting before loading into huggingface dataset.")
             parquet_file_dir = path.join(ungoliant_pipeline_output_dir, language_id + "_parquet")
             mkdir(parquet_file_dir)
             for chunk in tqdm(pd.read_json(path.join(ungoliant_pipeline_output_dir, language_id + "_meta.jsonl"), lines=True, chunksize=10000)):

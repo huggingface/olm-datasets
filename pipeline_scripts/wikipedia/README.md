@@ -6,6 +6,7 @@ from datasets import load_dataset
 ds = load_dataset("Tristan/wikipedia", language="en", date="20220920")
 
 ds.save_to_disk("wikipedia_en_20220920")
+ds.push_to_hub("wikipedia_en_20220920")
 ````
 
 The code pulls the Wikipedia snapshot for the given date and language and does all the processing required to turn it into a clean pretraining dataset.

@@ -6,7 +6,7 @@ random.seed(42)
 
 parser = argparse.ArgumentParser(description="Downloads raw Common Crawl WET files.")
 parser.add_argument("--snapshots", nargs='+', help="The Common Crawl snapshots to download files from, such as CC-MAIN-2022-33 or CC-MAIN-2022-27. Several can be specified.", required=True)
-parser.add_argument("--download_dir", help="The directory to download the data to.", required=True)
+parser.add_argument("--download_dir", help="The name of the directory to create and download WET files to.", required=True)
 parser.add_argument("--segment_sampling_ratios", type=float, nargs="+", help="The ratios of each Common Crawl snapshot to use. The higher the ratio, the larger the generated dataset (but also the longer the time that the OLM pipeline runs). You should specify one for each snapshot. For example, if you specify '--snapshots CC-MAIN-2022-33 CC-MAIN-2022-27', then --segment_sampling_ratios could be '0.15 0.11'. This means that 15 percent of the segments from CC-MAIN-2022-33 will uniformly randomly sampled and used, and 11 percent of the segments from CC-MAIN-2022-27 will be uniformly randomly sampled and used.", required=True)
 parser.add_argument("--tmp_dir", default=".tmp_download_common_crawl", help="The directory where temporary files are stored. They are deleted when this script completes. Default is .tmp_download_common_crawl.")
 parser.add_argument("--num_proc", type=int, help="The number of processes to use.", required=True)

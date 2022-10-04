@@ -1,7 +1,7 @@
 from datasets import load_dataset, load_from_disk
 import argparse
 
-parser = argparse.ArgumentParser("Removes all examples from a Hugging Face dataset if they have a Wikipedia URL. This script is intened to be used if you eventually want to merge the dataset with a Wikipedia snapshot. In that case, examples from Wikipedia in this dataset are redundant.")
+parser = argparse.ArgumentParser(description="Removes all examples from a Hugging Face dataset if they have a Wikipedia URL. This script is intened to be used if you eventually want to merge the dataset with a Wikipedia snapshot. In that case, examples from Wikipedia in this dataset are redundant.")
 parser.add_argument("--input_dataset_name", help="Input dataset name.", required=True)
 parser.add_argument("--output_dataset_name", help="Output dataset name.", required=True)
 parser.add_argument("--url_column", help="Name of the URL column of the dataset.", required=True)

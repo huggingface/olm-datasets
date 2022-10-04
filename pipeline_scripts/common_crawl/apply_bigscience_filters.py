@@ -8,16 +8,16 @@ import uuid
 sys.path.append("data-preparation/preprocessing/training/01b_oscar_cleaning_and_filtering")
 from filtering import DatasetFiltering
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--input_dataset_name")
-parser.add_argument("--output_dataset_name")
-parser.add_argument("--lang_id")
-parser.add_argument("--split", default=None)
-parser.add_argument("--text_column")
-parser.add_argument("--num_proc", type=int)
-parser.add_argument("--push_to_hub", action="store_true")
-parser.add_argument("--tmp_dir", default=".tmp_apply_bigscience_filters")
-parser.add_argument("--load_from_hub_instead_of_disk", action="store_true")
+parser = argparse.ArgumentParser(description="Applies the BigScience BLOOM filters which were used on OSCAR. They are designed to improve text quality and remove pornographic content.")
+parser.add_argument("--input_dataset_name", help="The name of the input dataset.", required=True)
+parser.add_argument("--output_dataset_name", help="The name of the output dataset.", required=True)
+parser.add_argument("--lang_id", help="The language id of your dataset. This is necessary because the BigScience filters use a list of language-specific pornographic words, and also language-specific hyperparameters for text quality improvement.", required=True)
+parser.add_argument("--split", default=None, help="The split of the dataset to apply the filters to. Not all datasets have splits, so this is not a required argument.")
+parser.add_argument("--text_column", help="The name of the dataset column that contains the text.", required=True)
+parser.add_argument("--num_proc", type=int, help="The number of processes to use.", required=True)
+parser.add_argument("--push_to_hub", action="store_true", help="Whether to push the output dataset to the Hugging Face Hub after saving it to the disk.")
+parser.add_argument("--tmp_dir", default=".tmp_apply_bigscience_filters", help="Directory to store temporary files. It will be deleted afterwards. Defaults to .tmp_apply_bigscience_filters.")
+parser.add_argument("--load_from_hub_instead_of_disk", action="store_true", help="Whether to pull the input dataset by name from the Hugging Face Hub. If this argument is not used, it is assumed that there is a dataset saved to the disk with the input dataset name.")
 args = parser.parse_args()
 
 if args.load_from_hub_instead_of_disk:

@@ -3,7 +3,7 @@ Per the repository [here](https://huggingface.co/datasets/Tristan/wikipedia), al
 ```
 from datasets import load_dataset
 
-ds = load_dataset("wikipedia", language="en", date="20220920")
+ds = load_dataset("Tristan/wikipedia", language="en", date="20220920")
 
 ds.save_to_disk("wikipedia_en_20220920")
 ````

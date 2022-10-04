@@ -45,6 +45,6 @@ for index in range(len(args.snapshots)):
     run(f"mv {tmp_download_dir_name}/* {args.download_dir}/", shell=True)
     run(f"rm -r {tmp_download_dir_name}", shell=True)
 
-run("rm -r {args.tmp_dir}", shell=True)
+run(f"rm -r {args.tmp_dir}", shell=True)
 run("rm -r errors.txt", shell=True)
 

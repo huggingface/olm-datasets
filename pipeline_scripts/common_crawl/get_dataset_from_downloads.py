@@ -8,14 +8,24 @@ from shutil import move, rmtree
 import dateutil
 import argparse
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--download_dir")
-parser.add_argument("--output_dataset_name")
-parser.add_argument("--num_proc", type=int)
-parser.add_argument("--push_to_hub", action="store_true")
+parser = argparse.ArgumentParser(description="Turns downloads from download_common_crawl.py into a Hugging Face dataset, split by language (language is identified using a FastText model). The dataset has a timestamp column for the time it was crawled, along with a url column and, of course, a text column.")
+parser.add_argument("--download_dir", help="The directory of the downloaded WET files.", required=True)
+parser.add_argument("--output_dataset_name", help="The name of the Hugging Face dataset which will be saved upon completion of this program.", required=True)
+parser.add_argument("--num_proc", type=int, help="The number of processes to use, at a minimum.", required=True)
+parser.add_argument("--tmp_dir", default=".tmp_get_dataset_from_downloads", help="The directory to store temporary files. They will be deleted upon completion of this script. Defaults to .tmp_get_datasets_from_downloads.")
+parser.add_argument("--push_to_hub", action="store_true", help="Whether to push the Hugging Face dataset to the Hugging Face Hub after saving a copy to the disk.")
 args = parser.parse_args()
 
-filenames = next(walk(args.download_dir), (None, None, []))[2]
+if path.exists(args.tmp_dir):
+    rmtree(args.tmp_dir)
+
+mkdir(args.tmp_dir)
+
+tmp_download_dir = path.join(args.tmp_dir, "downloads_copy")
+
+shutil.copytree(args.download_dir, tmp_download_dir) 
+
+filenames = next(walk(tmp_download_dir), (None, None, []))[2]
 
 def split_a_into_n_parts(a, n):
     k, m = divmod(len(a), n)
@@ -32,14 +42,16 @@ def do_parallel_pipeline_processing(dirs_awaiting_processing):
         processes.append(p)
     for p in processes:
         p.wait()
-mkdir("ungoliant_pipeline_results")
+
+ungoliant_pipeline_results = path.join(tmp_download_dir, "ungoliant_pipeline_results")
+mkdir(ungoliant_pipeline_results)
 for i in range(len(filename_per_directory)):
-    download_chunk_dir = path.join(args.download_dir, "chunk_" + str(i))
+    download_chunk_dir = path.join(tmp_download_dir, "chunk_" + str(i))
     mkdir(download_chunk_dir)
     for filename in filename_per_directory[i]:
         num_files_awaiting_processing += 1
-        move(path.join(args.download_dir, filename), path.join(download_chunk_dir, filename))
-    pipeline_output_dir = path.join("ungoliant_pipeline_results", "chunk_" + str(i))
+        move(path.join(tmp_download_dir, filename), path.join(download_chunk_dir, filename))
+    pipeline_output_dir = path.join(ungoliant_pipeline_results, "chunk_" + str(i))
     mkdir(pipeline_output_dir)
     ungoliant_pipeline_output_dirs.append(pipeline_output_dir)
     dirs_awaiting_processing.append({"pipeline_output_dir": pipeline_output_dir, "download_chunk_dir": download_chunk_dir})
@@ -49,12 +61,6 @@ for i in range(len(filename_per_directory)):
         dirs_awaiting_processing = []
 
 do_parallel_pipeline_processing(dirs_awaiting_processing)
-
-for i in range(len(filename_per_directory)):
-    download_chunk_dir = path.join(args.download_dir, "chunk_" + str(i))
-    for filename in filename_per_directory[i]:
-        move(path.join(download_chunk_dir, filename), path.join(args.download_dir, filename))
-    rmtree(download_chunk_dir)
 
 # For some reason, datasets errors out if we try to load directly from the jsonl, so we need to do this first
 processes = []
@@ -86,7 +92,7 @@ for p in processes:
 data_files = {language_id: [path.join(ungoliant_pipeline_output_dir, language_id + "_parquet", "*.parquet") for ungoliant_pipeline_output_dir in ungoliant_pipeline_output_dirs] for language_id in language_ids}
 ds = load_dataset("parquet", data_files=data_files)
 ds.save_to_disk(args.output_dataset_name)
-rmtree("ungoliant_pipeline_results")
+rmtree(args.tmp_dir)
 
 if args.push_to_hub:
     ds.push_to_hub(args.output_dataset_name)

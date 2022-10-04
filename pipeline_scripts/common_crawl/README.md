@@ -5,7 +5,7 @@
 
 ## Every time
 
-Use the following commands to get a small sample of the final processed dataset. They should take only a few min on an `n1-standard-96`.
+Use the following commands to get a dataset. They should take only a few min on an `n1-standard-96`.
 
 ```
 python download_common_crawl.py --snapshots CC-MAIN-2022-33 --segment_sampling_ratios 0.0001 --download_dir=common_crawl_wet_downloads --num_proc=96
@@ -27,9 +27,8 @@ ds = ds.shuffle()  # Optionally, shuffle the dataset so you can get an idea of w
 ds.push_to_hub("cc_olm")
 ```
 
-Some notes:
+Increase `--segment_sampling_ratios` to get a larger dataset (it goes up to `1`). In the above code, `0.0001` means that it only uses a sample of `0.01%` of the data from a Common Crawl snapshot. It will take a couple days if you want a clean pretraining dataset on the order of 100 gigabytes, which requires terabytes of raw Common Crawl data.
 
-* To get more data, you can increase `segment_sampling_ratios` all the way up to `1`.
-* Each of the python commands (besides `download_common_crawl.py`) saves a Hugging Face dataset that the next python command consumes. You can push these intermediate datasets to the Hugging Face Hub too, and load them to take a look.
-* To get a dataset for a language besides English, just replace "en" with another supported language code in the commands above.
+# Documentation
 
+Run any of the python commands with the `--help` option to see it's documentation. For example, `python download_common_crawl.py --help`.

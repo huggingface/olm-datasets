@@ -1,5 +1,6 @@
 from datasets import load_dataset, load_from_disk
 import argparse
+from os import path, mkdir
 from shutil import rmtree
 import sys
 import uuid
@@ -15,6 +16,7 @@ parser.add_argument("--split", default=None)
 parser.add_argument("--text_column")
 parser.add_argument("--num_proc", type=int)
 parser.add_argument("--push_to_hub", action="store_true")
+parser.add_argument("--tmp_dir", default=".tmp_apply_bigscience_filters")
 parser.add_argument("--load_from_hub_instead_of_disk", action="store_true")
 args = parser.parse_args()
 
@@ -38,6 +40,12 @@ if args.text_column != "text":
         ds = ds.rename_column("text", temp_column_name)
     ds = ds.rename_column(args.text_column, "text")
 
+if path.exists(args.tmp_dir):
+    run(f"rm -r {args.tmp_dir}", shell=True)
+
+mkdir(args.tmp_dir)
+tmp_dataset_name = path.join(args.tmp_dir, "intermediate_bigscience_filtered_dataset")
+
 dataset_filtering = DatasetFiltering(
     dataset=ds,
     lang_dataset_id=args.lang_id,
@@ -45,14 +53,14 @@ dataset_filtering = DatasetFiltering(
     path_sentencepiece_model=f"sp_kenlm_ft_models/{args.lang_id}.sp.model",
     path_kenlm_model=f"sp_kenlm_ft_models/{args.lang_id}.arpa.bin",
     num_proc=args.num_proc,
-    path_dir_save_dataset="tmp_dataset",
+    path_dir_save_dataset=tmp_dataset_name,
 )
 
 dataset_filtering.modifying_documents()
 dataset_filtering.filtering()
 dataset_filtering.save_dataset()
 
-ds = load_from_disk("tmp_dataset/" + args.lang_id)
+ds = load_from_disk(path.join(tmp_dataset_name, args.lang_id))
 
 # We have to do this if the text column is not named "text" in the dataset,
 # because DatasetFiltering assumes that the name is "text".
@@ -62,7 +70,7 @@ if args.text_column != "text":
         ds = ds.rename_column(temp_column_name, "text")
 
 ds.save_to_disk(args.output_dataset_name)
-rmtree("tmp_dataset")
+rmtree(args.tmp_dir)
 
 if args.push_to_hub:
     ds.push_to_hub(args.output_dataset_name)

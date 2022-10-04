@@ -31,4 +31,4 @@ Increase `--segment_sampling_ratios` to get a larger dataset (it goes up to `1`)
 
 # Documentation
 
-Run any of the python commands with the `--help` option to see it's documentation. For example, `python download_common_crawl.py --help`.
+Run any of the python commands with the `--help` flag. For example, `python download_common_crawl.py --help`.

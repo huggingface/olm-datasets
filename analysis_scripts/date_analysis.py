@@ -4,7 +4,7 @@ import datetime
 from statistics import median
 import argparse
 
-parser = argparse.ArgumentParser(description="This script analyzes a sample of a dataset for which dates are mentioned in the text.")
+parser = argparse.ArgumentParser(description="This script analyzes text samples in a dataset. For each text sample, it runs a date parser to extract dates. If there are dates in the example, then it looks for any dates that are between a week ago and a month ago, a week ago and two months ago, and a week ago and three months ago. It returns the average number of examples which mention such dates. You can use these averages to help determine how up-to-date the text in your dataset is.")
 parser.add_argument("--input_dataset_name", required=True)
 parser.add_argument("--text_column", required=True)
 parser.add_argument("--split", default=None, help="The dataset split to use. Some datasets don't have splits so this argument is optional.")

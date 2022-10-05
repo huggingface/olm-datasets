@@ -38,6 +38,8 @@ dirs_awaiting_processing = []
 def do_parallel_pipeline_processing(dirs_awaiting_processing):
     processes = []
     for obj in dirs_awaiting_processing:
+        print("running")
+        print(f"ungoliant pipeline --lid-path=sp_kenlm_ft_models/lid.176.bin {obj['download_chunk_dir']} {obj['pipeline_output_dir']}")
         p = subprocess.Popen(f"ungoliant pipeline --lid-path=sp_kenlm_ft_models/lid.176.bin {obj['download_chunk_dir']} {obj['pipeline_output_dir']}", shell=True)
         processes.append(p)
     for p in processes:
@@ -47,7 +49,7 @@ def do_parallel_pipeline_processing(dirs_awaiting_processing):
 # the ungoliant pipeline is already parallelized, so we don't do this so that the ungoliant pipeline will run faster.
 # Instead, we do this so that we will have num_proc number of output files so we can load them in parallel into a 
 # pandas dataframes, which will eventually be turned into Hugging Face dataset.
-ungoliant_pipeline_results = path.join(tmp_download_dir, "ungoliant_pipeline_results")
+ungoliant_pipeline_results = path.join(args.tmp_dir, "ungoliant_pipeline_results")
 mkdir(ungoliant_pipeline_results)
 for i in range(len(filename_per_directory)):
     download_chunk_dir = path.join(tmp_download_dir, "chunk_" + str(i))

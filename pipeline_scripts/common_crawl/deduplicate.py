@@ -31,13 +31,13 @@ def check_for_ending_example_in_cluster(example, index, column, last_index):
         return True
     return ds[index+1][column] != example[column]
 
-# Sort the dataset so examples with the same first 200 bytes of text are grouped together.
+# Sort the dataset so examples with the same first 100 bytes of text are grouped together.
 print("Sorting by first 100 bytes of text")
 temp_column_name = str(uuid.uuid4())
-ds = ds.map(lambda example: {temp_column_name: example[args.text_column][:200]}, num_proc=args.num_proc)
+ds = ds.map(lambda example: {temp_column_name: example[args.text_column][:100]}, num_proc=args.num_proc)
 ds = ds.sort(temp_column_name)
 
-# Filter away examples if their first 200 bytes of text exactly matches another example's first 200 bytes of text.
+# Filter away examples if their first 100 bytes of text exactly matches another example's first 100 bytes of text.
 # This gets rid of a subset of the examples that the next step (suffix array deduplication) gets rid of, so we technically
 # don't need to do it. But it speeds up the next step quite a bit to do this first.
 last_index = len(ds) - 1
@@ -45,14 +45,14 @@ ds = ds.filter(lambda example, index: check_for_ending_example_in_cluster(exampl
 ds = ds.remove_columns(temp_column_name)
 
 # Now, do an aggressive form of Suffix Array Substring Exact Deduplication.
-# If an example in our courpus has a byte string of 200 or longer which is duplicated elsewhere in the corpus, remove the whole example.
+# If an example in our courpus has a byte string of 100 or longer which is duplicated elsewhere in the corpus, remove the whole example.
 # In the paper for this deduplication method, they only remove the byte string, not the whole example. Removing the whole example will vastly
 # shrink the size of the dataset, but it will ensure better quality data, without gaps in text continuity. We have plenty of data, so we opt for
 # removing the whole example.
 if path.exists(".cache"):
     rmtree(".cache")
 
-deduplicator = GoogleSuffixArrayDeduplicator(k=200)
+deduplicator = GoogleSuffixArrayDeduplicator(k=100)
 
 # We need to create this iterator over the dataset text column
 # to ensure that not all of the text entries are loaded into memory at once.

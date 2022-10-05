@@ -38,8 +38,6 @@ dirs_awaiting_processing = []
 def do_parallel_pipeline_processing(dirs_awaiting_processing):
     processes = []
     for obj in dirs_awaiting_processing:
-        print("running")
-        print(f"ungoliant pipeline --lid-path=sp_kenlm_ft_models/lid.176.bin {obj['download_chunk_dir']} {obj['pipeline_output_dir']}")
         p = subprocess.Popen(f"ungoliant pipeline --lid-path=sp_kenlm_ft_models/lid.176.bin {obj['download_chunk_dir']} {obj['pipeline_output_dir']}", shell=True)
         processes.append(p)
     for p in processes:

@@ -13,8 +13,8 @@ This code is also highly parallelized. It can process 100's of gigabytes from Co
 * fast internet connection.
 
 ## Setup
-1. Clone this repo, with its submodules: `git clone --recursive git@github.com:huggingface/olm-datasets.git`
-2. Get a machine with lots of CPUs and 100's of gigabytes of memory. We use an n1-standard-96 Ubuntu 20.04 LTS machine on GCP. Add Terabytes of disk space too. You may need an even larger machine if you want to process close to 100% of a Common Crawl snapshot or even several snapshots.
+1. If you want to use this repo to generate a decent amount of data, get a machine with lots of CPUs and 100's of gigabytes of memory. We use an n1-standard-96 Ubuntu 20.04 LTS machine on GCP. Add Terabytes of disk space too. You may need an even larger machine if you want to process close to 100% of a Common Crawl snapshot or even several snapshots.
+2. Clone with submodules: `git clone --recursive git@github.com:huggingface/olm-datasets.git`
 3. Install cargo (rust package manager) with `curl https://sh.rustup.rs -sSf | sh`. Then install Ungoliant with `cargo install ungoliant@1.2.3`. You may need to install gcc and cmake first.
 4. Set up a Python 3.9 environment, and run `pip install -r requirements.txt`
 5. Run `huggingface-cli login`. This cli should have been installed in the requirements.txt. To login, you need to paste a token from your account at [https://huggingface.co](https://huggingface.co). This step is necessary for the pipeline to push the generated datasets to your Hugging Face account.

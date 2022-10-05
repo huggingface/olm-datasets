@@ -5,4 +5,4 @@
 [submodule "deduplicate-text-datasets"]
 	path = pipeline_scripts/common_crawl/deduplicate-text-datasets
 	url = https://github.com/TristanThrush/deduplicate-text-datasets.git
-	commit = ad86c7f65ac626581fe3a4277106309bc6b50c23
+	commit = b3c929daad38a03661b5bbf5210b55aa69810a20

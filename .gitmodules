@@ -1,8 +1,6 @@
 [submodule "data-preparation"]
 	path = pipeline_scripts/common_crawl/data-preparation
 	url = https://github.com/bigscience-workshop/data-preparation.git
-	commit = ccd873f30446ef57fb003e46a9a454522de8486d
 [submodule "deduplicate-text-datasets"]
 	path = pipeline_scripts/common_crawl/deduplicate-text-datasets
 	url = https://github.com/TristanThrush/deduplicate-text-datasets.git
-	commit = b3c929daad38a03661b5bbf5210b55aa69810a20

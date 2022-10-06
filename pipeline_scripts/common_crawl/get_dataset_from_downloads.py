@@ -4,7 +4,7 @@ import pandas as pd
 import subprocess
 from multiprocessing import Process
 from os import walk, mkdir, path
-from shutil import move, rmtree, copytree
+from shutil import move, rmtree
 import dateutil
 import argparse
 
@@ -21,9 +21,9 @@ if path.exists(args.tmp_dir):
 
 mkdir(args.tmp_dir)
 
-tmp_download_dir = path.join(args.tmp_dir, "downloads_copy")
+tmp_download_dir = path.join(args.tmp_dir, "downloads")
 
-copytree(args.download_dir, tmp_download_dir)
+move(args.download_dir, tmp_download_dir)
 
 filenames = next(walk(tmp_download_dir), (None, None, []))[2]
 

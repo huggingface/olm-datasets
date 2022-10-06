@@ -10,7 +10,7 @@ Specifically, this repo has modular Python commands that enable you to:
 
 This code is also highly parallelized, although it can certianly be improved further. It can process over a terabyte from Common Crawl in about a day, and all of English Wikipedia in less than an hour if you have:
 * A machine with a lot of CPUs and memory.
-* fast internet connection.
+* A fast internet connection.
 
 ## Setup
 1. If you want to use this repo to generate a decent amount of data, get a machine with lots of CPUs and memory. We use an `n2d-standard-224` running `Ubuntu 20.04 LTS` on GCP. Add Terabytes of disk space too. You may need an even larger machine if you want to process close to 100% of a Common Crawl snapshot or several snapshots, particularly due to how much memory the deduplication process uses.

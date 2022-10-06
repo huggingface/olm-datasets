@@ -1,4 +1,4 @@
-Per the repository [here](https://huggingface.co/datasets/Tristan/wikipedia), just run this Python code. It uses all CPUs available and should take about an hour on a GCP `n1-standard-96`.
+Per the repository [here](https://huggingface.co/datasets/Tristan/wikipedia), just run this Python code. It uses all CPUs available and should take less than an hour if you have a lot of CPUs (on the order of 100).
 
 ```
 from datasets import load_dataset

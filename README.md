@@ -8,12 +8,12 @@ Specifically, this repo has modular Python commands that enable you to:
 * Run the OSCAR filters used by BigScience for the BLOOM language model. These filters ensure some level of text quality and reduce pornographic content.
 * Deduplicate the data.
 
-This code is also highly parallelized. It can process 100's of gigabytes from Common Crawl in a few hours, and all of English Wikipedia in about an hour if you have:
-* A machine with a lot of CPUs (on the order of 100) and a lot of memory (on the order of 300 GB), like n1-standard-96 on GCP.
+This code is also highly parallelized, although it can certianly be improved further. It can process over a terabyte from Common Crawl in about a day, and all of English Wikipedia in less than an hour if you have:
+* A machine with a lot of CPUs and memory.
 * fast internet connection.
 
 ## Setup
-1. Get a machine with lots of CPUs and 100's of gigabytes of memory. We use an n1-standard-96 Ubuntu 20.04 LTS machine on GCP. Add Terabytes of disk space too. You may need an even larger machine if you want to process close to 100% of a Common Crawl snapshot or even several snapshots.
+1. Get a machine with lots of CPUs and memory. We use an n2d-standard-224 running Ubuntu 20.04 LTS on GCP. Add Terabytes of disk space too. You may need an even larger machine if you want to process close to 100% of a Common Crawl snapshot or even several snapshots, particularly due to how much memory the deduplication process uses.
 2. Install cargo (rust package manager) with `curl https://sh.rustup.rs -sSf | sh`. Then install Ungoliant with `cargo install ungoliant@1.2.3`. You may need to install gcc and cmake first.
 3. Set up a Python 3.9 environment, and run `pip install -r requirements.txt`
 5. Run `huggingface-cli login`. This cli should have been installed in the requirements.txt. To login, you need to paste a token from your account at [https://huggingface.co](https://huggingface.co). This step is necessary for the pipeline to push the generated datasets to your Hugging Face account.

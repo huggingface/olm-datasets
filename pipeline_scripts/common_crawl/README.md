@@ -5,7 +5,7 @@
 
 ## Every time
 
-Use the following commands to get a dataset. They should take only a few min on an `n1-standard-96`.
+Use the following commands to get a dataset. They should take only a few min if you have lots of CPUs.
 
 ```
 python download_common_crawl.py --snapshots CC-MAIN-2022-33 --segment_sampling_ratios 0.0001 --download_dir=common_crawl_wet_downloads --num_proc=96
@@ -27,7 +27,7 @@ ds = ds.shuffle()  # Optionally, shuffle the dataset so you can get an idea of w
 ds.push_to_hub("cc_olm")
 ```
 
-Increase `--segment_sampling_ratios` to get a larger dataset (it goes up to `1`). In the above code, `0.0001` means that it only uses a sample of `0.01%` of the data from a Common Crawl snapshot. It will take a couple days if you want a clean pretraining dataset on the order of 100 gigabytes, which requires terabytes of raw Common Crawl data.
+Increase `--segment_sampling_ratios` to get a larger dataset (it goes up to `1`). In the above code, `0.0001` means that it only uses a sample of `0.01%` of the data from a Common Crawl snapshot. To generate a dataset for the Online Language Modelling Project, we are currently using a 20% random sample of the latest common crawl snapshot. Note that there are so many duplicates in Common Crawl data, that the deduplication script needs about 800GB of RAM when you specify `--segment_sampling_ratios 0.20`.
 
 # Documentation
 

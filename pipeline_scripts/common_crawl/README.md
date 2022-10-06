@@ -1,4 +1,4 @@
-# Quick start to create your very own Common Crawl pretraining dataset
+# Quick start
 
 This section provides all the commands that you need to generate a deduplicated and filtered dataset from Common Crawl, ready for pretraining!
 

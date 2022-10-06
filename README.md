@@ -13,7 +13,7 @@ This code is also highly parallelized, although it can certianly be improved fur
 * fast internet connection.
 
 ## Setup
-1. If you want to use this repo to generate a decent amount of data, get a machine with lots of CPUs and memory. We use an n2d-standard-224 running Ubuntu 20.04 LTS on GCP. Add Terabytes of disk space too. You may need an even larger machine if you want to process close to 100% of a Common Crawl snapshot or several snapshots, particularly due to how much memory the deduplication process uses.
+1. If you want to use this repo to generate a decent amount of data, get a machine with lots of CPUs and memory. We use an `n2d-standard-224` running `Ubuntu 20.04 LTS` on GCP. Add Terabytes of disk space too. You may need an even larger machine if you want to process close to 100% of a Common Crawl snapshot or several snapshots, particularly due to how much memory the deduplication process uses.
 2. Clone with submodules: `git clone --recursive git@github.com:huggingface/olm-datasets.git`
 3. Install cargo (rust package manager) with `curl https://sh.rustup.rs -sSf | sh`. Then install Ungoliant with `cargo install ungoliant@1.2.3`. You may need to install gcc and cmake first.
 4. Set up a Python 3.9 environment, and run `pip install -r requirements.txt`

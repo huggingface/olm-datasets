@@ -23,9 +23,13 @@ This code is also highly parallelized, although it can certianly be improved fur
 
 Follow the instructions at [pipeline_scripts/common_crawl](pipeline_scripts/common_crawl).
 
+Here is the output dataset to expect from a 20% random sample of the August 2022 Common Crawl Snapshot: [https://huggingface.co/datasets/Tristan/olm-CC-MAIN-2022-33-sampling-ratio-0.20](https://huggingface.co/datasets/Tristan/olm-CC-MAIN-2022-33-sampling-ratio-0.20)
+
 ## Getting a clean and up-to-date Wikipedia corpus
 
 Follow the instructions at [pipeline_scripts/wikipedia](pipeline_scripts/wikipedia).
+
+Here is the output dataset to expect from a September 2022 snapshot of Wikipedia: [https://huggingface.co/datasets/Tristan/olm-wikipedia-20220920](https://huggingface.co/datasets/Tristan/olm-wikipedia-20220920)
 
 ## Analyzing the corpora
 

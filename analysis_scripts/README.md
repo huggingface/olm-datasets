@@ -1,5 +1,3 @@
-# Analyze the Common Crawl or Wikipedia pretraining datasets that you created
-
 This folder has a tool that you can use to get a little information about how recent your data is. We expect to add to it with time.
 
 ## To analyze for date mentions in the text

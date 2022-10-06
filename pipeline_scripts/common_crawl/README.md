@@ -42,7 +42,7 @@ There are tons of duplicates in Common Crawl data, and our deduplication procedu
 With 20% of a Common Crawl snapshot, the size of the dataset coming from the BigScience filters should be about 300GB when saved to your disk. After going through the deduplication step, it will only be about 30GB! When combined with a Wikipedia snapshot, this level of data is about compute-optimal for training a model at the scale of RoBERTa-large. But if you want to train a larger model, then specify a higher value for `--segment_sampling_ratios`, or even use multiple Common Crawl snapshots like this:
 
 ```
-python download_common_crawl.py --snapshots CC-MAIN-2022-27 CC-MAIN-2022-33 --segment_sampling_ratios 0.5 1 --download_dir=common_crawl_wet_downloads --num_proc=96
+python download_common_crawl.py --snapshots CC-MAIN-2022-27 CC-MAIN-2022-33 --segment_sampling_ratios 0.5 1 --download_dir=common_crawl_wet_downloads --num_proc=224
 ```
 
 Keep in mind that, with more data, the deduplication script will need even more RAM.

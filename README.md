@@ -1,6 +1,6 @@
-# Online Language Modelling Dataset Pipeline (🚧 WIP 🚧)
+# Online Language Modelling Dataset Pipeline
 
-This repo enables you to pull a large and up-to-date text corpus from the web. It uses state-of-the-art processing methods to produce a clean text dataset that you can immediately use to pretrain a large language model, like BERT, GPT, or BLOOM.
+This repo enables you to pull a large and up-to-date text corpus from the web. It uses state-of-the-art processing methods to produce a clean text dataset that you can immediately use to pretrain a large language model, like BERT, GPT, or BLOOM. The main use-case for this repo is the Online Language Modelling Project, where we want to keep a language model up-to-date by pretraining it on the latest Common Crawl and Wikipedia dumps every month or so.
 
 Specifically, this repo has modular Python commands that enable you to:
 * Specify Common Crawl web snapshots, or just Wikipedia snapshots. Then pull the data.
@@ -8,7 +8,7 @@ Specifically, this repo has modular Python commands that enable you to:
 * Run the OSCAR filters used by BigScience for the BLOOM language model. These filters ensure some level of text quality and reduce pornographic content.
 * Deduplicate the data.
 
-This code is also highly parallelized, although it can certianly be improved further. It can process over a terabyte from Common Crawl in about a day, and all of English Wikipedia in less than an hour if you have:
+This code is also fairly parallelized, although it can certianly be improved further. It can process over a terabyte from Common Crawl in a day or two, and all of English Wikipedia in less than an hour if you have:
 * A machine with a lot of CPUs and memory.
 * A fast internet connection.
 
@@ -23,7 +23,7 @@ This code is also highly parallelized, although it can certianly be improved fur
 
 Follow the instructions at [pipeline_scripts/common_crawl](pipeline_scripts/common_crawl).
 
-Here is the output dataset to expect from a 20% random sample of the August 2022 Common Crawl Snapshot: [https://huggingface.co/datasets/Tristan/olm-CC-MAIN-2022-33-sampling-ratio-0.20](https://huggingface.co/datasets/Tristan/olm-CC-MAIN-2022-33-sampling-ratio-0.20)
+Here is the output dataset to expect from a 20% random segment sample of the August 2022 Common Crawl Snapshot: [https://huggingface.co/datasets/Tristan/olm-CC-MAIN-2022-33-sampling-ratio-0.20](https://huggingface.co/datasets/Tristan/olm-CC-MAIN-2022-33-sampling-ratio-0.20)
 
 ## Getting a clean and up-to-date Wikipedia corpus
 

@@ -53,7 +53,7 @@ python download_common_crawl.py --snapshots CC-MAIN-2022-27 CC-MAIN-2022-33 --se
 
 Keep in mind that, with more data, the deduplication script will need more RAM. Read on for limitations of the deduplication script.
 
-## Why do we specify a 30 gigabyte dataset for the OLM project?
+## Why do we specify a 30 gigabyte Common Crawl dataset for the OLM project?
 
 When combined with a Wikipedia snapshot, this level of data is about 8 to 9 billion tokens. So, it is compute-optimal for training a model at the scale of RoBERTa-large according to the [Chinchilla Paper](https://arxiv.org/abs/2203.15556).
 

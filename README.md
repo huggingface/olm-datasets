@@ -17,7 +17,7 @@ This code is also fairly parallelized, although it can certianly be improved fur
 2. Clone with submodules: `git clone --recursive git@github.com:huggingface/olm-datasets.git`
 3. Install cargo (rust package manager) with `curl https://sh.rustup.rs -sSf | sh`. Then install Ungoliant with `cargo install ungoliant@1.2.3`. You may need to install gcc and cmake first.
 4. Set up a Python 3.9 environment, and run `pip install -r requirements.txt`
-5. Run `huggingface-cli login`. This cli should have been installed in the requirements.txt. To login, you need to paste a token from your account at [https://huggingface.co](https://huggingface.co). This step is necessary for the pipeline to push the generated datasets to your Hugging Face account.
+5. Run `huggingface-cli login`. This cli should have been installed from `requirements.txt`. To login, you need to paste a token from your account at [https://huggingface.co](https://huggingface.co). This step is necessary for the pipeline to push the generated datasets to your Hugging Face account.
 
 ## Getting a clean and up-to-date Common Crawl corpus
 

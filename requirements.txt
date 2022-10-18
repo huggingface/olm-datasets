@@ -7,3 +7,4 @@ text-dedup==0.2.1
 argparse==1.4.0
 dateparser==1.1.1
 mwparserfromhell==0.6.4
+matplotlib==3.6.1

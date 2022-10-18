@@ -34,3 +34,5 @@ Here is the output dataset to expect from a September 2022 snapshot of Wikipedia
 ## Analyzing the corpora
 
 Follow the instructions at [analysis_scripts](analysis_scripts).
+
+Here is a tweet thread which utilizes these scripts: [https://twitter.com/TristanThrush/status/1582356055794733057](https://twitter.com/TristanThrush/status/1582356055794733057)

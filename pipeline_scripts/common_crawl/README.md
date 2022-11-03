@@ -29,11 +29,11 @@ You can then upload the final dataset to the Hugging Face Hub from a Python term
 ```
 from datasets import load_from_disk
 
-ds = load_from_disk("cc_olm")
+ds = load_from_disk("cc_olm")  # Or cc_olm_with_last_modified if you did the optional step above.
 
 ds = ds.shuffle()  # Optionally, shuffle the dataset so you can get an idea of what a random sample of the dataset looks like in the Hugging Face Hub dataset preview.
 
-ds.push_to_hub("cc_olm")
+ds.push_to_hub("cc_olm")  # Or cc_olm_with_last_modified if you did the optional step above.
 ```
 
 

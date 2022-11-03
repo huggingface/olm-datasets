@@ -1,3 +1,5 @@
+![olm_cc_pipeline](https://user-images.githubusercontent.com/20826878/199851707-64a7a026-c413-4d78-8b04-a825e07534b3.jpeg)
+
 # Quick start
 
 This section provides all the commands that you need to generate a deduplicated and filtered dataset from Common Crawl, ready for pretraining!

@@ -36,3 +36,8 @@ Here is the output dataset to expect from a September 2022 snapshot of Wikipedia
 Follow the instructions at [analysis_scripts](analysis_scripts).
 
 Here is a tweet thread which utilizes these scripts: [https://twitter.com/TristanThrush/status/1582356055794733057](https://twitter.com/TristanThrush/status/1582356055794733057)
+
+Here is another tweet thread that dives a little deeper:
+[https://twitter.com/TristanThrush/status/1588156731909029889](https://twitter.com/TristanThrush/status/1588156731909029889)
+
+And here is a colab where you can quickly run some of the analysis yourself! [https://colab.research.google.com/drive/18Wv7ghW2rRjEe3oWDqh2iz9qqO8O6XcX#scrollTo=1yecqwWNOL6N](https://colab.research.google.com/drive/18Wv7ghW2rRjEe3oWDqh2iz9qqO8O6XcX#scrollTo=1yecqwWNOL6N)

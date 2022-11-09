@@ -10,9 +10,9 @@ python term_counts.py --input_dataset_names Tristan/olm-CC-MAIN-2022-21-sampling
 
 Here is the resulting figure:
 
-TODO
+![summer_2022_term_counts](https://user-images.githubusercontent.com/20826878/200715141-6ce73388-7d6a-4d05-bbf4-88e1f2a3c62c.png)
 
-This command reports the count of words with the highest usage increase between the start of summer 2022 and the fall of 2022, out of all of the words in the dataset with only alphabetic characters, lowercased, and split by spaces:
+This command reports the count of words with the highest usage increase between the start of summer 2022 and the fall of 2022, out of all of the frequent (> mean + std) words in the dataset with only alphabetic characters, lowercased, and split by spaces:
 
 ```
 python term_counts.py --input_dataset_names Tristan/olm-CC-MAIN-2022-21-sampling-ratio-0.14775510204 Tristan/olm-CC-MAIN-2022-27-sampling-ratio-0.16142697881 Tristan/olm-CC-MAIN-2022-33-sampling-ratio-0.20 Tristan/olm-CC-MAIN-2022-40-sampling-ratio-0.15894621295 --input_dataset_pretty_names "May" "Jun/Jul" "Aug" "Sep/Oct" --num_terms_to_find 5 --plot_title="Top 5 Words with Highest Usage Increase" --analysis_column=text --split=train --num_proc=224 --output_filename=top_5_term_counts_heatmap.png --load_from_hub_instead_of_disk --ylabel "Word" --as_heatmap --heatmap_bar_label "Percent Increase" --xlabel "Internet Snapshot" --normalize_axis=1 --cache_dir=term_counts_cache_top_5 --percent_increase --annotation "To avoid spurious results from words with small counts, we only considered frequent words. A word is considered frequent if the count is greater than a standard deviation above the mean count. Snapshot datasets are from the OLM project: https://github.com/huggingface/olm-datasets."
@@ -20,7 +20,7 @@ python term_counts.py --input_dataset_names Tristan/olm-CC-MAIN-2022-21-sampling
 
 Here is the resulting figure:
 
-TODO
+![top_5_term_counts_heatmap](https://user-images.githubusercontent.com/20826878/200715219-ce3b6fa4-e9f6-4dac-b594-caa052e759a0.png)
 
 This command reports the count of date mentions in the text between summer 2022 and fall 2022:
 
@@ -30,13 +30,17 @@ python term_counts.py --input_dataset_names Tristan/olm-CC-MAIN-2022-21-sampling
 
 Here is the resulting figure:
 
-TODO
+![date_term_counts_heatmap_text](https://user-images.githubusercontent.com/20826878/200715272-e5dab35b-211c-4344-b685-881e0ce46bb0.png)
 
 This command reports the count of date mentions in the URLs between summer 2022 and fall 2022:
 
 ```
 python term_counts.py --input_dataset_names Tristan/olm-CC-MAIN-2022-21-sampling-ratio-0.14775510204 Tristan/olm-CC-MAIN-2022-27-sampling-ratio-0.16142697881 Tristan/olm-CC-MAIN-2022-33-sampling-ratio-0.20 Tristan/olm-CC-MAIN-2022-40-sampling-ratio-0.15894621295 --input_dataset_pretty_names "May" "Jun/Jul" "Aug" "Sep/Oct" --terms 2022/05 2022/06 2022/07 2022/08 2022/09 --plot_title="Relative Freq of Dates in Webpage URLs" --analysis_column=url --split=train --num_proc=224 --output_filename=date_term_counts_heatmap_url.png --load_from_hub_instead_of_disk --as_heatmap --ylabel "Date (YYYY/MM)" --term_pretty_names May Jun Jul Aug Sep --cache_dir term_counts_cache_date_urls --xlabel "Internet Snapshot" --annotation "Snapshot datasets are from the OLM project: https://github.com/huggingface/olm-datasets." --normalize
 ```
+
+Here is the resulting figure:
+
+![date_term_counts_heatmap_url](https://user-images.githubusercontent.com/20826878/200715307-b3110b88-191b-419f-91ff-1e45ecfc6361.png)
 
 ## To analyze the timestamp distribution accross and within various datasets
 
@@ -48,7 +52,7 @@ python timestamp_dist.py --input_dataset_names Tristan/olm-CC-MAIN-2022-40-sampl
 
 Here is the resulting figure:
 
-TODO
+![last_modified_dist](https://user-images.githubusercontent.com/20826878/200715332-203f5950-6d4d-4e3a-bfaa-ebbcf7603242.png)
 
 This command reports the crawl timestamp distribution for the summer 2022 through fall 2022 OLM CC datasets:
 
@@ -58,7 +62,7 @@ python timestamp_dist.py --input_dataset_names Tristan/olm-CC-MAIN-2022-40-sampl
 
 Here is the resulting figure:
 
-TODO
+![crawl_dist](https://user-images.githubusercontent.com/20826878/200715349-562af902-8863-428a-8417-0975738164bf.png)
 
 ## To analyze the URL domain distribution accross and within various datasets
 
@@ -70,7 +74,7 @@ python url_dist.py --input_dataset_names Tristan/olm-CC-MAIN-2022-21-sampling-ra
 
 Here is the resulting figure:
 
-TODO
+![url_hist_may](https://user-images.githubusercontent.com/20826878/200715359-7c7bc37a-5749-454a-9e38-77b1116de7f0.png)
 
 This command reports the domain correlations between the summer 2022 through fall 2022 OLM CC datasets:
 
@@ -80,7 +84,7 @@ python url_dist.py --input_dataset_names Tristan/olm-CC-MAIN-2022-21-sampling-ra
 
 Here is the resulting figure:
 
-TODO
+![url_corr](https://user-images.githubusercontent.com/20826878/200715384-d4793781-9775-4884-bffe-698b16677284.png)
 
 Does sampling about 15-20% of a Common Crawl Snapshot do anything surprising? How much correlation is there between the resulting OLM dataset from a Common Crawl sample from a random seed versus another random seed? This command reports the domain correlation between two Sep/Oct datasets where the only difference is the sampled segments based on different random seeds:
 
@@ -90,8 +94,7 @@ python url_dist.py --input_dataset_names Tristan/olm-CC-MAIN-2022-40-sampling-ra
 
 Here is the resulting figure:
 
-TODO
-
+![url_corr_sep_oct_different_seeds](https://user-images.githubusercontent.com/20826878/200715404-5ccb3a1e-9e82-41be-82db-9e54e73785fe.png)
 
 ## To analyze for duplicates accross various datasets
 
@@ -103,7 +106,7 @@ python duplicates.py --input_dataset_names Tristan/olm-CC-MAIN-2022-33-sampling-
 
 Here is the resulting figure:
 
-TODO
+![duplicate_urls_aug_jun_jul](https://user-images.githubusercontent.com/20826878/200715427-79d0120b-fa48-4fdf-8410-8943a1325780.png)
 
 This command reports the ratio of exact text duplicated between the August and June/July Common Crawl OLM Datasets:
 
@@ -113,7 +116,7 @@ python duplicates.py --input_dataset_names Tristan/olm-CC-MAIN-2022-33-sampling-
 
 Here is the resulting figure:
 
-TODO
+![duplicate_text_aug_jun_jul](https://user-images.githubusercontent.com/20826878/200715436-4893263b-1fe9-4941-ae43-edd4732652c4.png)
 
 What about the duplicated URLs between two differently seeded OLM datasets from the same month?
 
@@ -123,7 +126,7 @@ python duplicates.py --input_dataset_names Tristan/olm-CC-MAIN-2022-40-sampling-
 
 Here is the resulting figure:
 
-TODO
+![duplicate_urls_sep_oct_different_seeds](https://user-images.githubusercontent.com/20826878/200715575-fae99dcb-cef5-411e-a786-a6e20e53a003.png)
 
 And what about the text?
 
@@ -131,8 +134,7 @@ And what about the text?
 python duplicates.py --input_dataset_names Tristan/olm-CC-MAIN-2022-40-sampling-ratio-0.15894621295 Tristan/olm-CC-MAIN-2022-40-sampling-ratio-0.15894621295-seed-69 --analysis_column=text --split=train --num_proc=224 --plot_title="Text in two Differently Seeded Sep/Oct CC OLM Datasets" --output_filename=duplicate_text_sep_oct_different_seeds.png --load_from_hub_instead_of_disk
 ```
 
-TODO
-
+![duplicate_text_sep_oct_different_seeds](https://user-images.githubusercontent.com/20826878/200715583-1aa76245-14c5-4afe-88c5-539c8665d4d7.png)
 
 ## Documentation
 

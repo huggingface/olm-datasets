@@ -1,4 +1,4 @@
-This folder has tools that you can use to get a little information about the OLM datasets, or any Hugging Face dataset for text-pretraining.
+# OLM Analysis
 
 ## To analyze for term counts accross various datasets
 

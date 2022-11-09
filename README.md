@@ -40,4 +40,4 @@ Here is a tweet thread which utilizes these scripts: [https://twitter.com/Trista
 Here is another tweet thread that dives a little deeper:
 [https://twitter.com/TristanThrush/status/1588156731909029889](https://twitter.com/TristanThrush/status/1588156731909029889)
 
-And here is a colab where you can quickly run some of the analysis yourself! [https://colab.research.google.com/drive/18Wv7ghW2rRjEe3oWDqh2iz9qqO8O6XcX#scrollTo=30fos2k-N4TM](https://colab.research.google.com/drive/18Wv7ghW2rRjEe3oWDqh2iz9qqO8O6XcX#scrollTo=30fos2k-N4TM)
+And here is a colab where you can quickly run some of the analysis yourself! [https://colab.research.google.com/drive/18Wv7ghW2rRjEe3oWDqh2iz9qqO8O6XcX?usp=sharing](https://colab.research.google.com/drive/18Wv7ghW2rRjEe3oWDqh2iz9qqO8O6XcX?usp=sharing)

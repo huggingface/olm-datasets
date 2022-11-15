@@ -1,4 +1,4 @@
-datasets==2.5.1
+datasets==2.6.1
 emoji==1.7.0
 fasttext==0.9.2
 sentencepiece==0.1.97
@@ -7,5 +7,5 @@ text-dedup==0.2.1
 argparse==1.4.0
 dateparser==1.1.1
 mwparserfromhell==0.6.4
-matplotlib==3.6.1
-multiprocess==0.70.14
+matplotlib==3.6.2
+multiprocess==0.70.13

@@ -17,7 +17,7 @@ python download_common_crawl.py --snapshots CC-MAIN-2022-33 --segment_sampling_r
 python get_text_dataset_from_wet_downloads.py --download_dir=common_crawl_wet_downloads --output_dataset_name=cc_raw --num_proc=224
 python remove_wikipedia_urls.py --input_dataset_name=cc_raw --output_dataset_name=cc_no_wikipedia --url_column=url --split=en --num_proc=224
 python apply_bigscience_filters.py --input_dataset_name=cc_no_wikipedia --output_dataset_name=cc_filtered --lang_id=en --text_column=text --num_proc=224
-ulimit -Sn 1000000 && python deduplicate.py --input_dataset_name=cc_filtered --output_dataset_name=cc_olm --text_column=text --num_proc=224
+ulimit -Sn 1000000 && python deduplicate.py --input_dataset_name=cc_filtered --output_dataset_name=cc_olm --text_column=text --remove_whole_example --num_proc=224
 
 # Optionally, get the last-modified headers from the websites and add them to the dataset. --segment_sampling_ratios and --seed must be the same as above for this to work.
 python download_common_crawl.py --snapshots CC-MAIN-2022-33 --segment_sampling_ratios 0.0001 --seed=42 --download_dir=common_crawl_wat_downloads --paths_type=wat --num_proc=224

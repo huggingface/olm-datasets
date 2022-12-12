@@ -36,6 +36,8 @@ datasets:
 - oscar
 ---
 
+Taken from the amazing repo here: [https://huggingface.co/edugp/kenlm](https://huggingface.co/edugp/kenlm)
+
 # KenLM models
 This repo contains several KenLM models trained on different tokenized datasets and languages.  
 KenLM models are probabilistic n-gram languge models that models. One use case of these models consist on fast perplexity estimation for [filtering or sampling large datasets](https://huggingface.co/bertin-project/bertin-roberta-base-spanish). For example, one could use a KenLM model trained on French Wikipedia to run inference on a large dataset and filter out samples that are very unlike to appear on Wikipedia (high perplexity), or very simple non-informative sentences that could appear repeatedly (low perplexity).

@@ -1,6 +1,6 @@
 # Online Language Modelling Dataset Pipeline
 
-This repo enables you to pull a large and up-to-date text corpus from the web. It uses state-of-the-art processing methods to produce a clean text dataset that you can immediately use to pretrain a large language model, like BERT, GPT, or BLOOM. The main use-case for this repo is the Online Language Modelling Project, where we want to keep a language model up-to-date by pretraining it on the latest Common Crawl and Wikipedia dumps every month or so.
+This repo enables you to pull a large and up-to-date text corpus from the web. It uses state-of-the-art processing methods to produce a clean text dataset that you can immediately use to pretrain a large language model, like BERT, GPT, or BLOOM. The main use-case for this repo is the Online Language Modelling Project, where we want to keep a language model up-to-date by pretraining it on the latest Common Crawl and Wikipedia dumps every month or so. You can see the models for the OLM project here: https://huggingface.co/olm. They actually get better performance than their original static counterparts.
 
 Specifically, this repo has modular Python commands that enable you to:
 * Specify Common Crawl web snapshots, or just Wikipedia snapshots. Then pull the data.

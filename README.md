@@ -47,7 +47,7 @@ And here is a colab where you can quickly run some of the analysis yourself! [ht
 ```
 @misc{thrush2022pipeline,
     title={Online Language Modelling Data Pipeline},
-    author={Tristan Thrush, Helen Ngo, Nathan Lambert, Douwe Kiela},
+    author={Tristan Thrush and Helen Ngo and Nathan Lambert and Douwe Kiela},
     year={2022},
     howpublished={\url{https://github.com/huggingface/olm-datasets}}
 }
